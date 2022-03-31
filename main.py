@@ -7,6 +7,10 @@ screen.bgcolor("black")
 screen.title("SNAKE GAME")
 screen.tracer(0)
 
+while(true)
+    print("Hi, I'm Alex")
+    sleep(20)
+
 snake = Snake()
 
 screen.listen()
