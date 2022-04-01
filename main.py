@@ -31,9 +31,15 @@ while game_is_on:
     #detect snake head with food
     if snake.head.distance(food) < 15:
         print("nom nom nom!!")
+        snake.grow_snake()
         food.refresh()
-        scoreboard.clear()
         scoreboard.increase_score()
+
+    # SNAKE HITS WALL
+    if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
+        game_is_on = False
+        print("Game over!!")
+        scoreboard.game_over()
         
     
 

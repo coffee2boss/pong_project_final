@@ -14,6 +14,7 @@ class Snake:
         self.segments = []                          # bundeling all parts of snake together. 
         self.create_snake()
         self.head = self.segments[0]                # DECLARING WHICH PART OF SNAKE IS THE HEAD
+        self.tail = self.segments[-1]
 
     def create_snake(self): 
         for position in STARTING_POSITIONS:
@@ -22,6 +23,14 @@ class Snake:
             new_segment.penup()
             new_segment.goto(position)
             self.segments.append(new_segment)
+
+    def grow_snake(self): 
+            new_segment = Turtle("square")
+            new_segment.color("green")
+            new_segment.penup()
+            self.segments.append(new_segment)
+            
+        
 
              
 #get snake to automatically move forwards together

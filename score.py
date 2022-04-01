@@ -1,4 +1,8 @@
-from turtle import Turtle
+from ctypes import alignment
+from turtle import Turtle, update
+ALIGNMENT = "center"
+FONT = ("Courier", 12 , "normal")
+FONT2 = ("Courier", 20 , "bold")
 
 class Scoreboard(Turtle):
 
@@ -10,11 +14,19 @@ class Scoreboard(Turtle):
         self.score = 0
         self.setposition(0, 280)
         self.speed("fastest")
-        self.write(f"Score = {self.score}", align="center", font=("Arial",12,"normal"))
+        self.update_scoreboard()
+
+    def update_scoreboard(self):
+        self.write(f"Score = {self.score}", align=ALIGNMENT, font=FONT)
+
+    def game_over(self):
+        self.setposition(0, 0)
+        self.write("Game Over", align=ALIGNMENT, font=FONT2)
 
     def increase_score(self):
         self.score += 1
-        self.write(f"Score = {self.score}", align="center", font=("Arial",12,"normal"))
+        self.clear()
+        self.update_scoreboard()
 
   
     
