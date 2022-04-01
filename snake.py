@@ -24,7 +24,7 @@ class Snake:
             new_segment.goto(position)
             self.segments.append(new_segment)
 
-    def grow_snake(self): 
+    def grow_snake(self):  # adds a new segment to the snake
             new_segment = Turtle("square")
             new_segment.color("green")
             new_segment.penup()
