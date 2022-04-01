@@ -11,7 +11,7 @@ DOWN = 270
 class Snake:
     """Models each snake segment."""
     def __init__(self):
-        self.segments = []                          # bundeling all parts of snake together. 
+        self.segments = []                          # Bundeling all parts of snake together. 
         self.create_snake()
         self.head = self.segments[0]                # DECLARING WHICH PART OF SNAKE IS THE HEAD
         self.tail = self.segments[-1]
