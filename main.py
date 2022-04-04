@@ -1,50 +1,70 @@
 import time
-from turtle import Screen
-from snake import Snake
-from food import Food
+from turtle import Screen, color
+from paddles import Paddle
+from ball import Ball
 from score import Scoreboard
 
 screen = Screen()
-screen.setup(width=600, height=600)
+screen.setup(width=800, height=600)
 screen.bgcolor("black")
-screen.title("SNAKE GAME")
+screen.title("PONG GAME")
 screen.tracer(0)
 
-
 scoreboard = Scoreboard()
-snake = Snake()
-food = Food()
+paddle_a = Paddle((-370,0))
+paddle_b = Paddle((370,0))
+ball = Ball()
 
+#MOVEMENT FOR PADDLE A
 screen.listen()
-screen.onkey(snake.up, "Up")                        # input and ties to the controls for the snake
-screen.onkey(snake.down, "Down")
-screen.onkey(snake.left, "Left")
-screen.onkey(snake.right, "Right")
+screen.onkey(paddle_a.go_up, "q")    #UP                  # input and ties to the controls for paddle_a
+screen.onkey(paddle_a.go_down, "a")    #DOWN
+
+#MOVEMENT FOR PADDLE B
+screen.onkey(paddle_b.go_up, "p")    #UP                    # input and ties to the controls for paddle_b
+screen.onkey(paddle_b.go_down, "l")    #DOWN
+
 
 # Get snake to automatically move forwards
 game_is_on = True
 while game_is_on:
-    screen.update()
-    time.sleep(0.1)
-    snake.move()
-    
-    # Detect snake head with food
-    if snake.head.distance(food) < 15:
-        print("nom nom nom!!")
-        snake.grow_snake()
-        food.refresh()
-        scoreboard.increase_score()
+    time.sleep(ball.ball_speed)         # this can be adjusted to adjust the speed of the ball 
+    screen.update()  
+    ball.move()
 
-    # IF SNAKE HITS WALL
-    if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
+    # detect if ball hits wall on y axis
+    if ball.ycor() > 280 or ball.ycor() < -280:
+        ball.bounce()
+
+    # detect if ball hits paddles on x axis
+    if ball.distance(paddle_a) < 40 and ball.xcor() < -350 :
+        ball.paddle_bounce()
+        
+    elif ball.distance(paddle_b) < 40 and ball.xcor() > 350:
+        ball.paddle_bounce()
+    
+    # detect if player scores
+    if ball.xcor() == 380:
+        scoreboard.clear()
+        scoreboard.increase_score_A()
+        scoreboard.update_scoreboard()
+        ball.refresh()
+        ball.move()
+    
+    if ball.xcor() == -380:
+        scoreboard.clear()
+        scoreboard.increase_score_B()
+        scoreboard.update_scoreboard()
+        ball.refresh()
+        ball.paddle_bounce()
+
+    #End of game
+    if scoreboard.score_B == 10:
+        game_is_on = False
+        scoreboard.game_over()
+    elif scoreboard.score_A == 10:
         game_is_on = False
         scoreboard.game_over()
 
-    # IF SNAKE HITS ITSELF
-    for segment in snake.segments[1:]:
-        if snake.head.distance(segment) < 10:
-            game_is_on = False
-            scoreboard.game_over()
-        
 
 screen.exitonclick()
