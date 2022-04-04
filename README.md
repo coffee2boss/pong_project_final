@@ -1,2 +1,2 @@
-# snake_project_20_3_22
-simple snake game in python
+# pong_project
+simple Pong game in python
